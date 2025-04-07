@@ -1,66 +1,134 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# User Management API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi RESTful API untuk manajemen data pengguna menggunakan Laravel.
 
-## About Laravel
+## Fitur
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- CRUD (Create, Read, Update, Delete) untuk entitas User
+- Validasi input pada endpoint menggunakan middleware
+- Logging untuk setiap request
+- Pengujian menggunakan PHPUnit
+- Dokumentasi API menggunakan Swagger
+- Docker untuk menjalankan aplikasi
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Persyaratan
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- PHP >= 8.0
+- Composer
+- MySQL/PostgreSQL/MongoDB
+- (Opsional) Docker & Docker Compose
 
-## Learning Laravel
+## Instalasi
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Cara 1: Instalasi Lokal
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+1. Clone repository
+```bash
+git clone https://github.com/username/user-management-api.git
+cd user-management-api
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+2. Install dependencies
+```bash
+composer install
+```
 
-## Laravel Sponsors
+3. Salin file .env.example menjadi .env
+```bash
+cp .env.example .env
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+4. Buat database dan konfigurasi file .env
 
-### Premium Partners
+5. Generate application key
+```bash
+php artisan key:generate
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+6. Jalankan migrasi
+```bash
+php artisan migrate
+```
 
-## Contributing
+7. Jalankan server
+```bash
+php artisan serve
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+8. Akses aplikasi di http://localhost:8000
 
-## Code of Conduct
+### Cara 2: Menggunakan Docker
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+1. Clone repository
+```bash
+git clone https://github.com/username/user-management-api.git
+cd user-management-api
+```
 
-## Security Vulnerabilities
+2. Salin file .env.example menjadi .env
+```bash
+cp .env.example .env
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+3. Sesuaikan konfigurasi database di file .env
+```
+DB_CONNECTION=mysql
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE=user_management
+DB_USERNAME=root
+DB_PASSWORD=your_mysql_root_password
+```
 
-## License
+4. Jalankan Docker Compose
+```bash
+docker-compose up -d
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+5. Masuk ke container aplikasi
+```bash
+docker-compose exec app bash
+```
+
+6. Install dependencies dan jalankan migrasi
+```bash
+composer install
+php artisan key:generate
+php artisan migrate
+```
+
+7. Akses aplikasi di http://localhost
+
+## Endpoint API
+
+- `GET /api/users`: Mendapatkan daftar semua pengguna
+- `GET /api/users/{id}`: Mendapatkan data pengguna berdasarkan id
+- `POST /api/users`: Menambahkan pengguna baru
+- `PUT /api/users/{id}`: Memperbarui data pengguna berdasarkan id
+- `DELETE /api/users/{id}`: Menghapus pengguna berdasarkan id
+
+## Dokumentasi API
+
+Dokumentasi API tersedia di `/api/documentation` setelah menjalankan:
+
+```bash
+php artisan l5-swagger:generate
+```
+
+## Testing
+
+Untuk menjalankan unit test:
+
+```bash
+php artisan test
+```
+
+## Struktur Proyek
+
+Proyek ini menggunakan pola arsitektur MVC:
+
+- `app/Models`: Berisi model data
+- `app/Http/Controllers`: Berisi controller untuk menangani request
+- `app/Http/Middleware`: Berisi middleware untuk validasi dan logging
+- `database/migrations`: Berisi file migrasi database
+- `tests`: Berisi file pengujian
